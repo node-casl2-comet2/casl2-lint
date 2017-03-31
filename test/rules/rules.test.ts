@@ -5,11 +5,13 @@ import * as fs from "fs";
 import * as path from "path";
 import * as assert from "assert";
 import { Linter } from "../../src/linter";
+import * as Rules from "../../src/rules/rules";
+import { Rule } from "../../src/rules/rule";
 
-function beforeAfterTest(dir: string, name: string) {
+function beforeAfterTest(dir: string, name: string, rules?: Rule[]) {
     const beforePath = path.join(dir, `${name}.before.cas`);
     const afterPath = path.join(dir, `${name}.after.cas`);
-    const linter = new Linter();
+    const linter = new Linter(rules);
 
     const actual = linter.lint(beforePath);
     const expected = fs.readFileSync(afterPath).toString();
@@ -17,14 +19,13 @@ function beforeAfterTest(dir: string, name: string) {
     assert.equal(actual, expected);
 }
 
-test("hex upper case rule", () => {
-    beforeAfterTest("./test/baseline/rules", "hexUpperCaseRule");
-});
+function testRule(testName: string, testdataName: string, rules: Rule | Rule[]) {
+    test(testName, () => {
+        const r = Array.isArray(rules) ? rules : [rules];
+        beforeAfterTest("./test/baseline/rules", testdataName, r);
+    });
+}
 
-test("whitespace rule", () => {
-    beforeAfterTest("./test/baseline/rules", "whitespaceRule");
-});
-
-test("indent rule", () => {
-    beforeAfterTest("./test/baseline/rules", "indentRule");
-});
+testRule("hex upper case rule", "hexUpperCaseRule", new Rules.HexUpperCaseRule());
+testRule("whitespace rule", "whitespaceRule", new Rules.WhitespaceRule());
+testRule("indent rule", "indentRule", new Rules.IndentRule());

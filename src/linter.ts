@@ -14,15 +14,17 @@ export interface LinterAnalysis {
     source: string;
 }
 
+const RECOMENDED_RULES = [
+    new HexUpperCaseRule(),
+    new WhitespaceRule(),
+    new IndentRule(),
+];
+
 export class Linter {
     private rules: Rule[];
 
-    constructor() {
-        this.rules = [
-            new HexUpperCaseRule(),
-            new WhitespaceRule(),
-            new IndentRule(),
-        ];
+    constructor(rules: Rule[] = RECOMENDED_RULES) {
+        this.rules = rules;
     }
 
     public analyze(path: string): LinterAnalysis {
