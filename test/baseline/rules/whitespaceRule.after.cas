@@ -1,4 +1,4 @@
-CASL    START
-        LAD     GR1, 1, GR2
-        RET
-        END
+CASL      START
+          LAD     GR1, 1, GR2
+          RET
+          END

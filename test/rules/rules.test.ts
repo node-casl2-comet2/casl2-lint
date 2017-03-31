@@ -13,6 +13,7 @@ function beforeAfterTest(dir: string, name: string) {
 
     const actual = linter.lint(beforePath);
     const expected = fs.readFileSync(afterPath).toString();
+
     assert.equal(actual, expected);
 }
 
@@ -22,4 +23,8 @@ test("hex upper case rule", () => {
 
 test("whitespace rule", () => {
     beforeAfterTest("./test/baseline/rules", "whitespaceRule");
+});
+
+test("indent rule", () => {
+    beforeAfterTest("./test/baseline/rules", "indentRule");
 });

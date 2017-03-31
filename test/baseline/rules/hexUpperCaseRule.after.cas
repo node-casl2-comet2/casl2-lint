@@ -1,5 +1,5 @@
-CASL    START
-        LAD     GR1, #000A
-        LD      GR2, =#000A
-        RET
-        END
+CASL      START
+          LAD     GR1, #000A
+          LD      GR2, =#000A
+          RET
+          END
