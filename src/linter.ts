@@ -5,6 +5,7 @@ import { Rule } from "./rules/rule";
 import * as fs from "fs";
 import { Fix } from "./fix";
 import { HexUpperCaseRule } from "./rules/hexUpperCaseRule";
+import { WhitespaceRule } from "./rules/whitespaceRule";
 
 
 export interface LinterAnalysis {
@@ -17,7 +18,8 @@ export class Linter {
 
     constructor() {
         this.rules = [
-            new HexUpperCaseRule()
+            new HexUpperCaseRule(),
+            new WhitespaceRule()
         ];
     }
 

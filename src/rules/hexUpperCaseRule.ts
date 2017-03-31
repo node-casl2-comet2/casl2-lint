@@ -1,6 +1,6 @@
 "use strict";
 
-import { Rule } from "./rule";
+import { RuleBase } from "./rule";
 import { RuleWalker } from "../ruleWalker";
 import * as casl2 from "@maxfield/casl2-language";
 import { Fix } from "../fix";
@@ -9,11 +9,9 @@ import { Fix } from "../fix";
  * Make hex upper case
  * e.g. #000a -> #000A, =#000a -> =#000A
  */
-export class HexUpperCaseRule implements Rule {
+export class HexUpperCaseRule extends RuleBase {
     public apply(sourceFile: casl2.SourceFile): Fix[] {
-        const walker = new HexWalker(sourceFile);
-        walker.walkSourceFile();
-        return walker.getFixes();
+        return this.runWalker(new HexWalker(sourceFile));
     }
 }
 

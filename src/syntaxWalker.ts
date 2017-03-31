@@ -1,19 +1,20 @@
 "use strict";
 
 import * as casl2 from "@maxfield/casl2-language";
+import { Walker } from "./walker";
 
 /**
  * ASTの横断をラップするクラス
  * visit???メソッドをオーバーライドして
  * 特定の種類のノードに対して任意の処理を行う
  */
-export class SyntaxWalker {
+export class SyntaxWalker implements Walker {
 
     /**
      * Walk the node and its children recursively
      * @param node Entry node
      */
-    public walk(node: casl2.Node) {
+    public walk(node: casl2.Node): void {
         this.visitNode(node);
     }
 

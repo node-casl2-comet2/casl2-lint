@@ -19,3 +19,7 @@ function beforeAfterTest(dir: string, name: string) {
 test("hex upper case rule", () => {
     beforeAfterTest("./test/baseline/rules", "hexUpperCaseRule");
 });
+
+test("whitespace rule", () => {
+    beforeAfterTest("./test/baseline/rules", "whitespaceRule");
+});
