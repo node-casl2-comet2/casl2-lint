@@ -1,0 +1,6 @@
+CASL    START
+        LAD     GR1, #000a
+        LAD     GR2, #0001
+        ADDA    GR1, GR2
+        RET
+        END
