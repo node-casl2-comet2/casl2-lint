@@ -1,6 +1,6 @@
 "use strict";
 
-import { Replacement } from "./types";
+import { Replacement } from "./replacement";
 import { SyntaxWalker } from "./syntaxWalker";
 import { Fix } from "./fix";
 import * as casl2 from "@maxfield/casl2-language";

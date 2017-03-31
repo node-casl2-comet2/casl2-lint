@@ -7,6 +7,11 @@ import { Fix } from "./fix";
 import { HexUpperCaseRule } from "./rules/hexUpperCaseRule";
 
 
+export interface LinterAnalysis {
+    fixes: Fix[];
+    source: string;
+}
+
 export class Linter {
     private rules: Rule[];
 
@@ -16,7 +21,7 @@ export class Linter {
         ];
     }
 
-    public analyze(path: string): Fix[] {
+    public analyze(path: string): LinterAnalysis {
         const source = fs.readFileSync(path).toString();
         const sourceFile = casl2.createSourceFile(path, source);
         const fixes: Fix[] = [];
@@ -25,6 +30,21 @@ export class Linter {
             fix.forEach(x => fixes.push(x));
         }
 
-        return fixes;
+        return { fixes, source };
+    }
+
+    public lint(path: string): string {
+        const { fixes, source } = this.analyze(path);
+
+        // 後ろの修正から適用すれば修正する箇所のインデックスがずれないで済むので
+        // 修正を降順に並び替えている
+        const sortedFixes = fixes.sort((a, b) => b.endCharacter - a.endCharacter);
+
+        let content = source;
+        for (const fix of fixes) {
+            content = fix.patch(content);
+        }
+
+        return content;
     }
 }
