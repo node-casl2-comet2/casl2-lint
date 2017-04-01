@@ -9,7 +9,25 @@ export interface Rule {
     apply(sourceFile: casl2.SourceFile): Fix[];
 }
 
+export interface RuleMetadata {
+    /**
+     * Rule warning message. e.g. 'Missing whitespace'
+     */
+    message: string;
+
+    /**
+     * Rule code
+     */
+    code: number;
+
+    /**
+     * Rule name
+     */
+    name: string;
+}
+
 export abstract class RuleBase implements Rule {
+    public static metadata: RuleMetadata;
     public abstract apply(sourceFile: casl2.SourceFile): Fix[];
 
     public runWalker(walker: RuleWalker): Fix[] {

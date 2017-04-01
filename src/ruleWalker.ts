@@ -36,12 +36,12 @@ export class RuleWalker extends SyntaxWalker {
         return deleteText(start, end);
     }
 
-    private createFix(start: number, end: number, replacement: Replacement): Fix {
-        return new Fix(this.sourceFile, start, end, replacement);
+    public createFix(start: number, end: number, ruleName: string, message: string, ruleCode: number, replacement: Replacement): Fix {
+        return new Fix(this.sourceFile, start, end, ruleName, message, ruleCode, replacement);
     }
 
-    public addFix(start: number, end: number, replacement: Replacement): void {
-        this.fixes.push(this.createFix(start, end, replacement));
+    public addFix(fix: Fix): void {
+        this.fixes.push(fix);
     }
 }
 

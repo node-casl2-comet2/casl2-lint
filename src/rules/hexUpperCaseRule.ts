@@ -1,6 +1,6 @@
 "use strict";
 
-import { RuleBase } from "./rule";
+import { RuleBase, RuleMetadata } from "./rule";
 import { RuleWalker } from "../ruleWalker";
 import * as casl2 from "@maxfield/casl2-language";
 import { Fix } from "../fix";
@@ -10,6 +10,12 @@ import { Fix } from "../fix";
  * e.g. #000a -> #000A, =#000a -> =#000A
  */
 export class HexUpperCaseRule extends RuleBase {
+    public static metadata: RuleMetadata = {
+        name: "Hex upper case",
+        message: "16進数文字に小文字が含まれています。",
+        code: 1
+    };
+
     public apply(sourceFile: casl2.SourceFile): Fix[] {
         return this.runWalker(new HexWalker(sourceFile));
     }
@@ -37,8 +43,9 @@ class HexWalker extends RuleWalker {
         // すべて大文字かチェックする
         const rest = node.raw.substr(prefix.length);
         if (rest !== rest.toUpperCase()) {
+            const { metadata } = HexUpperCaseRule;
             const replacement = this.replaceText(node.start, node.end, prefix + rest.toUpperCase());
-            this.addFix(node.start, node.end, replacement);
+            this.addFix(this.createFix(node.start, node.end, metadata.name, metadata.message, metadata.code, replacement));
         }
     }
 }

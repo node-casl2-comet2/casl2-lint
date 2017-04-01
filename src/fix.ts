@@ -20,6 +20,10 @@ export class Fix {
      */
     public end: Position;
 
+    public message: string;
+    public ruleName: string;
+    public ruleCode: number;
+
     private replacement: Replacement;
 
     public get startCharacter(): number {
@@ -30,10 +34,21 @@ export class Fix {
         return this.replacement.end;
     }
 
-    constructor(sourceFile: casl2.SourceFile, start: number, end: number, replacement: Replacement) {
+    public get replacementText(): string {
+        return this.replacement.text;
+    }
+
+    constructor(sourceFile: casl2.SourceFile,
+        start: number, end: number,
+        ruleName: string, message: string, ruleCode: number, replacement: Replacement) {
         this.filePath = sourceFile.filePath;
         this.start = sourceFile.getLineAndCharacterOfPosition(start);
         this.end = sourceFile.getLineAndCharacterOfPosition(end);
+
+        this.ruleName = ruleName;
+        this.message = message;
+        this.ruleCode = ruleCode;
+
         this.replacement = replacement;
     }
 

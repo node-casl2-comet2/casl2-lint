@@ -27,16 +27,18 @@ export class Linter {
         this.rules = rules;
     }
 
-    public analyze(path: string): LinterAnalysis {
-        const source = fs.readFileSync(path).toString();
-        const sourceFile = casl2.createSourceFile(path, source);
+    public analyze(path: string, source: string): LinterAnalysis;
+    public analyze(path: string): LinterAnalysis;
+    public analyze(path: string, source?: string): LinterAnalysis {
+        const src = source || fs.readFileSync(path).toString();
+        const sourceFile = casl2.createSourceFile(path, src);
         const fixes: Fix[] = [];
         for (const rule of this.rules) {
             const fix = rule.apply(sourceFile);
             fix.forEach(x => fixes.push(x));
         }
 
-        return { fixes, source };
+        return { fixes, source: src };
     }
 
     public lint(path: string): string {
