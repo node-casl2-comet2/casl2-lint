@@ -4,6 +4,7 @@ import { RuleBase, RuleMetadata } from "./rule";
 import { RuleWalker } from "../ruleWalker";
 import * as casl2 from "@maxfield/casl2-language";
 import { Fix } from "../fix";
+import { Replacement } from "../replacement";
 
 /**
  * Add appropriate spaces between tokens
@@ -34,7 +35,10 @@ class WhitespaceWalker extends RuleWalker {
                 // GR, GR2のように2つのオペランド間が
                 // ', 'となっていたら間隔は2になっているはず
                 if (interval != 2) {
-                    this.makeSpace(a.end + 1, b.start);
+                    const start = a.end + 1;
+                    const end = interval == 1 ? start + 1 : b.start;
+                    const space = this.replaceText(start, b.start, " ");
+                    this.makeSpace(start, end, space);
                 }
                 return b;
             });
@@ -43,9 +47,8 @@ class WhitespaceWalker extends RuleWalker {
         super.visitOperandsNode(node);
     }
 
-    private makeSpace(start: number, end: number) {
+    private makeSpace(start: number, end: number, replacement: Replacement) {
         const { metadata } = WhitespaceRule;
-        const space = this.replaceText(start, end, " ");
-        this.addFix(this.createFix(start, end, metadata.name, metadata.message, metadata.code, space));
+        this.addFix(this.createFix(start, end, metadata.name, metadata.message, metadata.code, replacement));
     }
 }

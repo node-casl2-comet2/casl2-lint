@@ -11,14 +11,24 @@ export class Fix {
     public filePath: string;
 
     /**
-     * Start position of fix
+     * Start position to be fixed
      */
     public start: Position;
 
     /**
-     * End position of fix
+     * End position to be fixed
      */
     public end: Position;
+
+    /**
+     * Actual replacement start position
+     */
+    public replacementStartPosition: Position;
+
+    /**
+     * Actual replacement end position
+     */
+    public replacementEndPosition: Position;
 
     public message: string;
     public ruleName: string;
@@ -44,6 +54,8 @@ export class Fix {
         this.filePath = sourceFile.filePath;
         this.start = sourceFile.getLineAndCharacterOfPosition(start);
         this.end = sourceFile.getLineAndCharacterOfPosition(end);
+        this.replacementStartPosition = sourceFile.getLineAndCharacterOfPosition(replacement.start);
+        this.replacementEndPosition = sourceFile.getLineAndCharacterOfPosition(replacement.end);
 
         this.ruleName = ruleName;
         this.message = message;
