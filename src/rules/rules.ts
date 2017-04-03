@@ -3,3 +3,4 @@
 export { HexUpperCaseRule } from "./hexUpperCaseRule";
 export { IndentRule } from "./indentRule";
 export { WhitespaceRule } from "./whitespaceRule";
+export { TrailingWhitespaceRule } from "./trailingWhitespaceRule";

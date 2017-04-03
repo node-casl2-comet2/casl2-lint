@@ -11,3 +11,16 @@ export interface Position {
      */
     character: number;
 }
+
+export interface Range {
+    start: number;
+    end: number;
+}
+
+export interface ContentRange extends Range {
+    contentLength: number;
+}
+
+export function createContentRange(start: number, end: number, contentLength: number) {
+    return { start, end, contentLength };
+}

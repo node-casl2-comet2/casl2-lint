@@ -1,6 +1,6 @@
 "use strict";
 
-import { Replacement } from "./replacement";
+import { Replacement, appendText, deleteText, replaceText } from "./replacement";
 import { SyntaxWalker } from "./syntaxWalker";
 import { Fix } from "./fix";
 import * as casl2 from "@maxfield/casl2-language";
@@ -43,20 +43,4 @@ export class RuleWalker extends SyntaxWalker {
     public addFix(fix: Fix): void {
         this.fixes.push(fix);
     }
-}
-
-function createReplacement(start: number, end: number, text: string): Replacement {
-    return { start, end, text };
-}
-
-function replaceText(start: number, end: number, text: string): Replacement {
-    return createReplacement(start, end, text);
-}
-
-function appendText(start: number, text: string): Replacement {
-    return createReplacement(start, start, text);
-}
-
-function deleteText(start: number, end: number): Replacement {
-    return createReplacement(start, end, "");
 }

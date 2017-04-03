@@ -29,3 +29,4 @@ function testRule(testName: string, testdataName: string, rules: Rule | Rule[]) 
 testRule("hex upper case rule", "hexUpperCaseRule", new Rules.HexUpperCaseRule());
 testRule("whitespace rule", "whitespaceRule", new Rules.WhitespaceRule());
 testRule("indent rule", "indentRule", new Rules.IndentRule());
+testRule("trailing whitespace rule", "trailingWhitespaceRule", new Rules.TrailingWhitespaceRule());

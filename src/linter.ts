@@ -4,9 +4,7 @@ import * as casl2 from "@maxfield/casl2-language";
 import { Rule } from "./rules/rule";
 import * as fs from "fs";
 import { Fix } from "./fix";
-import { HexUpperCaseRule } from "./rules/hexUpperCaseRule";
-import { WhitespaceRule } from "./rules/whitespaceRule";
-import { IndentRule } from "./rules/indentRule";
+import * as Rules from "./rules/rules";
 
 
 export interface LinterAnalysis {
@@ -15,9 +13,10 @@ export interface LinterAnalysis {
 }
 
 const RECOMENDED_RULES = [
-    new HexUpperCaseRule(),
-    new WhitespaceRule(),
-    new IndentRule(),
+    new Rules.HexUpperCaseRule(),
+    new Rules.WhitespaceRule(),
+    new Rules.IndentRule(),
+    new Rules.TrailingWhitespaceRule(),
 ];
 
 export class Linter {
